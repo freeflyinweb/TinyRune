@@ -1,9 +1,12 @@
-package org.tinyrune.io;
+package org.tinyrune.net;
+
+import org.tinyrune.util.Settings;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -12,12 +15,16 @@ import java.util.regex.PatternSyntaxException;
 
 public class RunescapePageCrawler {
 
-    private final URL url;
+    private URL url;
     private String gameBase;
     private final HashMap<String, String> parameters;
 
-    public RunescapePageCrawler(URL url) {
-        this.url = url;
+    public RunescapePageCrawler() {
+        try {
+            this.url = new URL(Settings.get("url"));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         this.parameters = new HashMap<String, String>();
     }
 
