@@ -10,7 +10,15 @@ public class Settings {
 
     public static void read() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("settings.conf"));
+            File settingsFile = new File("settings.conf");
+            BufferedReader reader = null;
+            if(settingsFile.exists()) {
+                reader = new BufferedReader(new FileReader("settings.conf"));
+            } else {
+                InputStream is = Settings.class.getClassLoader().getResourceAsStream("settings.conf");
+                reader = new BufferedReader(new InputStreamReader(is));
+            }
+
             String line;
             String[] splits;
             while((line = reader.readLine()) != null) {
