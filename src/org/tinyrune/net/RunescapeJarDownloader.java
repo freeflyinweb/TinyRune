@@ -1,7 +1,6 @@
 package org.tinyrune.net;
 
 import org.tinyrune.Client;
-import org.tinyrune.canvas.LoaderCanvas;
 import org.tinyrune.util.Settings;
 
 import java.io.FileOutputStream;
@@ -42,7 +41,7 @@ public class RunescapeJarDownloader extends SwingWorker<Void,Void> {
             }
 
             JOptionPane.showMessageDialog(client, "Runescape Jar done downloading!");
-            client.runRunescape();
+            client.addRunescapeClient();
 
         } catch (MalformedURLException e) {
             e.printStackTrace();

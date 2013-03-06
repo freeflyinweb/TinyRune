@@ -1,36 +1,23 @@
 package org.tinyrune.ui.impl;
 
 import org.tinyrune.Client;
+import org.tinyrune.ui.UIButton;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
-public class ScreenShotButton extends JButton implements ActionListener {
+public class ScreenShotButton extends UIButton {
 
     private Client client;
     private Robot robot = null;
 
     public ScreenShotButton(Client client) {
-        super();
-        ImageIcon icon = null;
-        InputStream is = getClass().getClassLoader().getResourceAsStream("resources/camera.png");
-        if(is == null) {
-            icon = new ImageIcon("resources/camera.png");
-        } else {
-            try {
-                icon = new ImageIcon(ImageIO.read(is));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        this.setIcon(icon);
+        super(client);
+        this.setButtonIcon("camera.png");
         this.client = client;
         try {
             this.robot = new Robot();

@@ -23,7 +23,7 @@ public abstract class UIButton extends JButton implements ActionListener {
         ImageIcon icon = null;
         InputStream is = getClass().getClassLoader().getResourceAsStream("resources/" + iconName);
         if(is == null) {
-            icon = new ImageIcon("resources/update.png" + iconName);
+            icon = new ImageIcon("resources/" + iconName);
         } else {
             try {
                 icon = new ImageIcon(ImageIO.read(is));

@@ -1,23 +1,23 @@
 package org.tinyrune;
 
-import org.tinyrune.canvas.LoaderCanvas;
 import org.tinyrune.net.RunescapeJarDownloader;
 import org.tinyrune.rs.RunescapeClient;
-import org.tinyrune.ui.ConfigButton;
-import org.tinyrune.ui.ScreenShotButton;
-import org.tinyrune.ui.UpdateButton;
+import org.tinyrune.ui.*;
+import org.tinyrune.ui.impl.*;
 import org.tinyrune.util.Settings;
 
 import javax.swing.*;
 import java.applet.Applet;
 import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 
 public class Client extends JFrame {
 
-    private JPanel game;
-    private LoaderCanvas canvas;
+    private JTabbedPane gameManager;
     private File runescape;
+    private ArrayList<UIButton> buttons;
+    private JToolBar toolbar;
 
     public static void main(String[] args) {
         new Client();
@@ -25,53 +25,54 @@ public class Client extends JFrame {
 
     public Client() {
         super("TinyRune");
+        this.buttons = new ArrayList<UIButton>();
         this.runescape = new File("runescape.jar");
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         Settings.read();
-        this.game = new JPanel(new BorderLayout());
-        this.canvas = new LoaderCanvas();
-        this.canvas.setText("Runescape Downloading... Please Wait");
+        this.gameManager = new JTabbedPane();
+        JPanel autoSize = new JPanel();
+        autoSize.setPreferredSize(new Dimension(765, 503));
+        this.gameManager.add(autoSize);
 
-        JToolBar toolbar = new JToolBar();
-        ConfigButton configButton = new ConfigButton(this);
-        UpdateButton updateButton = new UpdateButton(this);
-        ScreenShotButton screenShotButton = new ScreenShotButton(this);
+        this.toolbar = new JToolBar();
+        this.addToolbarButton(new ConfigButton(this));
+        this.addToolbarButton(new UpdateButton(this));
+        this.addToolbarButton(new ScreenShotButton(this));
+        this.toolbar.add(Box.createGlue());
+        this.addToolbarButton(new AddScreenButton(this));
+        this.addToolbarButton(new RemoveScreenButton(this));
 
-        toolbar.add(configButton);
-        toolbar.add(updateButton);
-        toolbar.add(screenShotButton);
-
-
-        configButton.addActionListener(configButton);
-        updateButton.addActionListener(updateButton);
-        screenShotButton.addActionListener(screenShotButton);
-
-        this.game.add(canvas, BorderLayout.CENTER);
         if(Settings.get("toolbar").equals("true"))
-            this.getContentPane().add(toolbar, BorderLayout.PAGE_START);
-        this.getContentPane().add(game, BorderLayout.CENTER);
+            this.getContentPane().add(this.toolbar, BorderLayout.PAGE_START);
+        this.getContentPane().add(gameManager, BorderLayout.CENTER);
         this.pack();
         if(this.runescape.exists() && Settings.get("force-download").equals("false"))
-            this.runRunescape();
+            this.addRunescapeClient();
         else
             this.updateRunescape();
+        this.gameManager.remove(autoSize);
         this.setVisible(true);
     }
 
-    private void toolbar() {
-
+    private void addToolbarButton(UIButton button) {
+        this.buttons.add(button);
+        this.toolbar.add(button);
+        button.addActionListener(button);
     }
 
-    public void runRunescape() {
-        RunescapeClient rsClient = new RunescapeClient();
-        Applet applet = rsClient.getApplet();
-        applet.init();
-        applet.start();
-        this.game.remove(canvas);
-        this.game.add(applet, BorderLayout.CENTER);
-        this.pack();
+
+    public void addRunescapeClient() {
+        String name = JOptionPane.showInputDialog(this, "Tab name?");
+        if(name != null) {
+            RunescapeClient rsClient = new RunescapeClient();
+            Applet applet = rsClient.getApplet();
+            applet.init();
+            applet.start();
+            this.gameManager.addTab(name, applet);
+            this.pack();
+        }
     }
 
     public void updateRunescape() {
@@ -79,8 +80,15 @@ public class Client extends JFrame {
         runescapeJarDownloader.execute();
     }
 
-    public LoaderCanvas getCanvas() {
-        return this.canvas;
+    public void closeCurrentRunescape() {
+        Component component = this.gameManager.getSelectedComponent();
+        Applet applet = (Applet)component;
+        applet.stop();
+        this.gameManager.remove(component);
+    }
+
+    public JTabbedPane getGameManager() {
+        return this.gameManager;
     }
 
 }
