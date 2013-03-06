@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TinyRune:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TinyRune_jar</output-path>
+    <root id="archive" name="TinyRune.jar">
+      <element id="module-output" name="TinyRune" />
+      <element id="directory" name="resources">
+        <element id="dir-copy" path="$PROJECT_DIR$/resources" />
+      </element>
+      <element id="file-copy" path="$PROJECT_DIR$/settings.conf" />
+    </root>
+  </artifact>
+</component>
