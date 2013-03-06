@@ -6,6 +6,7 @@ import java.applet.Applet;
 import java.applet.AppletContext;
 import java.applet.AppletStub;
 import java.awt.*;
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -17,9 +18,10 @@ public class RunescapeClient implements AppletStub {
 
     public RunescapeClient() {
         try {
+            File file = new File("runescape.jar");
             this.crawler = new RunescapePageCrawler();
             this.crawler.crawl();
-            URLClassLoader classLoader = new URLClassLoader(new URL[]{new URL(Settings.get("url") + crawler.getGameBase())});
+            URLClassLoader classLoader = new URLClassLoader(new URL[]{file.toURI().toURL()}); // new URL(Settings.get("url") + crawler.getGameBase())
             Class<?> clientClass = classLoader.loadClass("client");
             this.applet = (Applet)clientClass.newInstance();
             this.applet.setStub(this);
