@@ -15,41 +15,35 @@ public class TestPlugin extends Plugin implements KeyListener {
 
     public TestPlugin(Client client) {
         super(client);
-        Applet applet = (Applet)client.getGameManager().getSelectedComponent();
-        Canvas canvas = (Canvas)applet.getComponent(0);
-        canvas.addKeyListener(this);
         jDialog = new JDialog();
-    }
-
-    public void unload() {
-
+        jDialog.setTitle("Test");
+        jDialog.add(new JLabel("Test plugin!"));
+        jDialog.pack();
     }
 
     public String getName() {
-        return null;
+        return "Test Plugin v0.0.1";
     }
 
     public String getManifest() {
-        return null;
+        return "freeflyinweb v0.0.1";
     }
 
     @Override
     public JDialog getGUI() {
-        jDialog.setPreferredSize(new Dimension(500,300));
-        jDialog.setTitle("Test");
         return jDialog;
     }
 
     @Override
     protected Void doInBackground() throws Exception {
-        Applet applet = (Applet)client.getGameManager().getSelectedComponent();
+        /*Applet applet = (Applet)client.getGameManager().getSelectedComponent();
         Canvas canvas = (Canvas)applet.getComponent(0);
         canvas.requestFocus();
         KeyEvent keyEventPress = new KeyEvent(canvas, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_D, 'd');
         KeyEvent keyEventRelease = new KeyEvent(canvas, KeyEvent.KEY_RELEASED, System.currentTimeMillis()+100, 0, KeyEvent.VK_D, 'd');
         canvas.dispatchEvent(keyEventPress);
         canvas.dispatchEvent(keyEventRelease);
-        this.getGUI().setVisible(true);
+        this.getGUI().setVisible(true);*/
         return null;
     }
 
