@@ -1,23 +1,22 @@
-package org.tinyrune.ui.impl;
+package org.tinyrune.ui.button;
 
 import org.tinyrune.Client;
 import org.tinyrune.ui.UIButton;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class ConfigButton extends UIButton {
+public class AddScreenButton extends UIButton {
 
     private Client client;
 
-    public ConfigButton(Client client) {
+    public AddScreenButton(Client client) {
         super(client);
-        this.setButtonIcon("gear.png");
+        this.setButtonIcon("plus.png");
         this.client = client;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JOptionPane.showMessageDialog(client, "Settings coming soon!");
+        this.client.addRunescapeClient();
     }
 }

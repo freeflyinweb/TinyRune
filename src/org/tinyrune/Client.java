@@ -3,7 +3,7 @@ package org.tinyrune;
 import org.tinyrune.net.RunescapeJarDownloader;
 import org.tinyrune.rs.RunescapeClient;
 import org.tinyrune.ui.*;
-import org.tinyrune.ui.impl.*;
+import org.tinyrune.ui.button.*;
 import org.tinyrune.util.Settings;
 
 import javax.swing.*;
@@ -30,6 +30,17 @@ public class Client extends JFrame {
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
         Settings.read();
         this.gameManager = new JTabbedPane();
         JPanel autoSize = new JPanel();
@@ -37,9 +48,11 @@ public class Client extends JFrame {
         this.gameManager.add(autoSize);
 
         this.toolbar = new JToolBar();
-        this.addToolbarButton(new ConfigButton(this));
+        this.addToolbarButton(new SettingsButton(this));
         this.addToolbarButton(new UpdateButton(this));
         this.addToolbarButton(new ScreenShotButton(this));
+        this.addToolbarButton(new MapButton(this));
+        this.addToolbarButton(new PluginButton(this));
         this.toolbar.add(Box.createGlue());
         this.addToolbarButton(new AddScreenButton(this));
         this.addToolbarButton(new RemoveScreenButton(this));

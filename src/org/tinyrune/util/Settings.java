@@ -24,7 +24,10 @@ public class Settings {
             while((line = reader.readLine()) != null) {
                 if(line.contains("=")) {
                     splits = line.split("=");
-                    map.put(splits[0], splits[1]);
+                    if(splits.length > 1)
+                        map.put(splits[0], splits[1]);
+                    else
+                        map.put(splits[0], "");
                 }
             }
             reader.close();
@@ -35,13 +38,14 @@ public class Settings {
         }
     }
 
-    public static void write() {
+    public static void save() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("settings.conf"));
             Iterator iterator = map.entrySet().iterator();
             while(iterator.hasNext()) {
                 Map.Entry pair = (Map.Entry)iterator.next();
                 writer.write(pair.getKey() + "=" + pair.getValue());
+                writer.newLine();
                 iterator.remove();
             }
             writer.close();

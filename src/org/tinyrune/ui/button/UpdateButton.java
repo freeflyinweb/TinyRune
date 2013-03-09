@@ -1,23 +1,22 @@
-package org.tinyrune.ui.impl;
+package org.tinyrune.ui.button;
 
 import org.tinyrune.Client;
 import org.tinyrune.ui.UIButton;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class AddScreenButton extends UIButton {
+public class UpdateButton extends UIButton {
 
     private Client client;
 
-    public AddScreenButton(Client client) {
+    public UpdateButton(Client client) {
         super(client);
-        this.setButtonIcon("plus.png");
+        this.setButtonIcon("update.png");
         this.client = client;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.client.addRunescapeClient();
+        this.client.updateRunescape();
     }
 }

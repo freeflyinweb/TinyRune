@@ -1,4 +1,4 @@
-package org.tinyrune.ui.impl;
+package org.tinyrune.ui.button;
 
 import org.tinyrune.Client;
 import org.tinyrune.ui.UIButton;
